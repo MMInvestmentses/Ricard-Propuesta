@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tu propuesta — MMI Investments</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0F1E;--ink2:#1C2540;--ink3:#3D4F6B;
+  --sky:#EEF3FC;--sky2:#DDE8F8;--line:#D0DCF0;
+  --blue:#1B5EE8;--blue2:#3D7BFF;--blue-soft:#EBF1FD;
+  --gold:#B8903A;--gold-soft:#FDF5E6;--gold-line:#ECD9A8;
+  --green:#0E8A5A;--green-soft:#E6F5EF;
+  --white:#FFFFFF;
+  --r:14px;--r2:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--sky);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100%;overflow-x:hidden;}
+
+/* ── HEADER ── */
+.header{background:var(--ink);padding:20px 20px 0;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 0%,rgba(27,94,232,0.25) 0%,transparent 60%);}
+.header-inner{position:relative;z-index:1;}
+.brand-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.bmark{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:14px;color:#fff;}
+.bname{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#fff;}
+.bname span{color:var(--blue2);}
+.header-date{font-size:10px;color:rgba(255,255,255,0.4);}
+.hero-name{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;line-height:1.1;margin-bottom:4px;}
+.hero-name em{color:var(--blue2);font-style:italic;}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:20px;}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:20px;}
+.chip{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:6px 14px;font-size:11px;color:rgba(255,255,255,0.7);}
+.chip strong{color:#fff;font-weight:500;}
+
+/* ── TABS ── */
+.tabs{background:var(--white);border-bottom:1px solid var(--line);display:flex;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:20;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:14px 18px;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);}
+
+/* ── CONTENT ── */
+.content{padding:0 0 80px;}
+.page{display:none;}
+.page.on{display:block;animation:fadeUp .3s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SECTION ── */
+.section{padding:20px 16px 0;}
+.section-label{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:var(--r);padding:18px;margin-bottom:10px;box-shadow:0 1px 3px rgba(10,15,30,0.06);}
+.card.gold-card{border:1.5px solid var(--gold-line);background:linear-gradient(135deg,var(--white) 0%,var(--gold-soft) 100%);}
+.card.blue-card{border:1.5px solid rgba(27,94,232,0.3);background:var(--blue-soft);}
+
+/* ── SCENARIO CARDS (overview) ── */
+.sc-overview{display:flex;flex-direction:column;gap:8px;}
+.sc-ov{background:var(--white);border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(10,15,30,0.06);cursor:pointer;transition:all .2s;border:1.5px solid transparent;}
+.sc-ov:hover,.sc-ov:active{border-color:var(--blue);background:var(--blue-soft);}
+.sc-ov.selected{border-color:var(--blue);background:var(--blue-soft);}
+.sc-ov.gold-ov{border-color:var(--gold-line);}
+.sc-ov.gold-ov:hover,.sc-ov.gold-ov.selected{background:var(--gold-soft);}
+.sco-letter{font-family:'DM Serif Display',serif;font-size:28px;color:var(--blue);width:36px;flex-shrink:0;line-height:1;}
+.sco-letter.gold{color:var(--gold);}
+.sco-body{flex:1;min-width:0;}
+.sco-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px;}
+.sco-desc{font-size:11px;color:var(--ink3);line-height:1.4;}
+.sco-right{text-align:right;flex-shrink:0;}
+.sco-gain{font-family:'DM Serif Display',serif;font-size:20px;color:var(--blue);line-height:1;}
+.sco-gain.gold{color:var(--gold);}
+.sco-tag{font-size:9px;color:var(--ink3);margin-top:2px;}
+.badge-sm{display:inline-block;background:var(--blue);color:#fff;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-top:3px;}
+.badge-sm.gold{background:var(--gold);}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{background:var(--white);border-radius:var(--r);padding:20px;margin-bottom:10px;box-shadow:0 1px 3px rgba(10,15,30,0.06);}
+.dp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.dp-letter{font-family:'DM Serif Display',serif;font-size:40px;color:var(--blue);line-height:1;}
+.dp-letter.gold{color:var(--gold);}
+.dp-title{font-size:17px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.dp-gain{font-family:'DM Serif Display',serif;font-size:32px;color:var(--blue);line-height:1;}
+.dp-gain.gold{color:var(--gold);}
+.dp-gain-lbl{font-size:10px;color:var(--ink3);margin-bottom:3px;}
+.dp-rows{}
+.dp-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px;}
+.dp-row:last-child{border-bottom:none;}
+.dp-row-lbl{color:var(--ink3);}
+.dp-row-val{font-weight:500;color:var(--ink);}
+.dp-row-val.blue{color:var(--blue);}
+.dp-row-val.green{color:var(--green);}
+.dp-row-val.gold{color:var(--gold);}
+.dp-row.total-row{background:none;}
+.dp-row.total-row .dp-row-lbl{font-weight:500;color:var(--ink);}
+
+/* ── SIMULATOR ── */
+.sim-card{background:var(--white);border-radius:var(--r);padding:20px;margin-bottom:10px;box-shadow:0 1px 3px rgba(10,15,30,0.06);}
+.sim-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);margin-bottom:4px;}
+.sim-sub{font-size:12px;color:var(--ink3);margin-bottom:18px;}
+.sim-field{margin-bottom:16px;}
+.sim-label{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;display:block;}
+.sim-input{width:100%;background:var(--sky);border:1.5px solid var(--line);border-radius:8px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:18px;font-weight:400;padding:12px 14px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.sim-input:focus{border-color:var(--blue);}
+.sim-select{width:100%;background:var(--sky);border:1.5px solid var(--line);border-radius:8px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 14px;outline:none;-webkit-appearance:none;cursor:pointer;}
+.sim-select:focus{border-color:var(--blue);}
+.sim-result{background:var(--ink);border-radius:var(--r2);padding:20px;margin-top:4px;}
+.sim-result-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;}
+.sim-result-val{font-family:'DM Serif Display',serif;font-size:38px;color:var(--blue2);line-height:1;margin-bottom:6px;}
+.sim-result-cap{font-size:13px;color:rgba(255,255,255,0.6);}
+.sim-result-rows{margin-top:14px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;display:flex;flex-direction:column;gap:8px;}
+.srr{display:flex;justify-content:space-between;font-size:12px;}
+.srr-lbl{color:rgba(255,255,255,0.5);}
+.srr-val{color:#fff;font-weight:500;}
+.srr-val.green{color:#4EEDB0;}
+
+/* ── COMPARE ── */
+.compare-grid{display:flex;flex-direction:column;gap:6px;}
+.cmp-row{background:var(--white);border-radius:8px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;box-shadow:0 1px 2px rgba(10,15,30,0.05);}
+.cmp-row.best{background:var(--blue-soft);border:1.5px solid rgba(27,94,232,0.3);}
+.cmp-letter{font-family:'DM Serif Display',serif;font-size:20px;color:var(--blue);width:24px;}
+.cmp-letter.gold{color:var(--gold);}
+.cmp-bar-wrap{position:relative;height:6px;background:var(--sky2);border-radius:3px;overflow:hidden;}
+.cmp-bar{position:absolute;left:0;top:0;height:100%;background:var(--blue);border-radius:3px;transition:width .6s ease;}
+.cmp-bar.gold{background:var(--gold);}
+.cmp-name{font-size:11px;color:var(--ink3);margin-top:3px;}
+.cmp-val{font-size:13px;font-weight:600;color:var(--blue);text-align:right;white-space:nowrap;}
+.cmp-val.gold{color:var(--gold);}
+
+/* ── CONTEXT NOTE ── */
+.note{background:var(--blue-soft);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px;font-size:12px;color:var(--ink2);line-height:1.6;}
+.note strong{color:var(--blue);font-weight:500;}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:14px;padding-bottom:18px;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:24px;flex-shrink:0;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:3px;}
+.tl-dot.gold{background:var(--gold);}
+.tl-line{flex:1;width:1px;background:var(--line);margin-top:4px;}
+.tl-body{flex:1;padding-bottom:4px;}
+.tl-period{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.tl-period.gold{color:var(--gold);}
+.tl-text{font-size:13px;color:var(--ink);}
+.tl-amount{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);margin-top:2px;}
+.tl-amount.green{color:var(--green);}
+.tl-amount.gold{color:var(--gold);}
+
+/* ── FOOTER ── */
+.footer-bar{background:var(--ink);padding:20px;margin-top:8px;}
+.footer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.footer-brand{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+.footer-web{font-size:11px;color:var(--blue2);}
+.footer-disc{font-size:10px;color:rgba(255,255,255,0.25);line-height:1.5;}
+
+/* ── TOGGLE SELECTOR ── */
+.sc-selector{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.sc-btn{border:1.5px solid var(--line);background:var(--white);border-radius:8px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--ink3);cursor:pointer;transition:all .18s;}
+.sc-btn.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.sc-btn.gold-btn.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+
+/* ── VENTANA WIDGET ── */
+.ventana-widget{background:var(--ink2);border-radius:var(--r2);padding:18px;margin-bottom:10px;}
+.vw-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:12px;}
+.vw-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.vw-label{font-size:12px;color:rgba(255,255,255,0.6);flex:1;}
+.vw-input{background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;padding:9px 13px;outline:none;width:130px;text-align:right;transition:border-color .2s;}
+.vw-input:focus{border-color:var(--blue2);}
+.vw-note{font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;}
+.vw-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.vwr{background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;}
+.vwr-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+.vwr-val{font-family:'DM Serif Display',serif;font-size:18px;color:#fff;line-height:1;}
+.vwr-val.blue{color:var(--blue2);}
+.vwr-val.green{color:#4EEDB0;}
+.vwr-val.gold{color:#F0C060;}
+.vwr-sub{font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.scenario-explainer{background:var(--white);border-radius:var(--r2);padding:16px;margin-bottom:10px;}
+.se-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+.se-step:last-child{border-bottom:none;padding-bottom:0;}
+.se-num{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.se-num.gold{background:var(--gold);}
+.se-body{flex:1;}
+.se-title{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.se-text{font-size:12px;color:var(--ink3);line-height:1.5;}
+.se-amount{font-family:'DM Serif Display',serif;font-size:16px;margin-top:4px;}
+.se-amount.green{color:var(--green);}
+.se-amount.gold{color:var(--gold);}
+.se-amount.blue{color:var(--blue);}
+.se-highlight{background:var(--blue-soft);border-radius:6px;padding:2px 8px;font-size:11px;color:var(--blue);font-weight:500;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="bmark">M</div>
+        <div class="bname">MMI <span>Investments</span></div>
+      </div>
+      <div class="header-date" id="hdate"></div>
+    </div>
+    <div class="hero-name">Hola, <em>Ricard</em></div>
+    <div class="hero-sub">Propuesta de inversi&oacute;n privada &middot; Confidencial</div>
+    <div class="hero-chips">
+      <div class="chip">Capital: <strong>50.000 &euro;</strong></div>
+      <div class="chip">Coste: <strong>0%</strong></div>
+      <div class="chip">M&aacute;x. rentabilidad: <strong>12% anual</strong></div>
+      <div class="chip" style="background:rgba(52,211,153,0.15);border-color:rgba(52,211,153,0.3);color:rgba(255,255,255,0.8)">&#128274; Propuesta confidencial</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab on" onclick="showTab('escenarios',this)">Escenarios</div>
+  <div class="tab" onclick="showTab('comparativa',this)">Comparativa</div>
+  <div class="tab" onclick="showTab('simulador',this)">Simulador</div>
+  <div class="tab" onclick="showTab('detalle',this)">Detalle</div>
+</div>
+
+<div class="content">
+
+  <!-- ═══ ESCENARIOS ═══ -->
+  <div class="page on" id="pg-escenarios">
+    <div class="section">
+      <div class="section-label" style="margin-top:4px">Selecciona para ver el detalle</div>
+      <div class="sc-overview" id="sc-overview"></div>
+    </div>
+
+
+    <div class="section" style="margin-top:16px">
+      <div class="section-label">Ventana de liquidez parcial</div>
+      <div class="ventana-widget">
+        <div class="vw-title">Capital que podrías retirar a los 6 meses</div>
+        <div class="vw-row">
+          <div class="vw-label">Importe máximo a retirar</div>
+          <input class="vw-input" id="ventana-input" type="number" value="40000" min="0" max="50000" step="1000" oninput="updateVentana()">
+        </div>
+        <div class="vw-note">Aplicable a los escenarios B y C. El resto del capital sigue bloqueado.</div>
+        <div class="vw-result-grid" id="ventana-results"></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="note">Tu capital proviene de un bono corporativo al <strong>0% de inter&eacute;s</strong>. Esto significa que cualquier rentabilidad que genere es <strong>ganancia neta para ti desde el primer d&iacute;a</strong>, sin ning&uacute;n coste de oportunidad.</div>
+    </div>
+  </div>
+
+  <!-- ═══ COMPARATIVA ═══ -->
+  <div class="page" id="pg-comparativa">
+    <div class="section">
+      <div class="section-label" style="margin-top:4px">Ganancia neta por escenario</div>
+      <div class="compare-grid" id="compare-grid"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Capital final por escenario</div>
+      <div class="compare-grid" id="compare-cap-grid"></div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:10px">El poder del inter&eacute;s compuesto</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.7">
+          La diferencia entre el Escenario E (12% simple, 12 meses) y el Escenario G (12% compuesto, 36 meses) es de <strong style="color:var(--gold)">14.246 &euro;</strong> extra. Ese dinero extra lo genera el inter&eacute;s sobre el inter&eacute;s &mdash; no requiere ninguna acci&oacute;n adicional por tu parte.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SIMULADOR ═══ -->
+  <div class="page" id="pg-simulador">
+    <div class="section">
+      <div class="sim-card">
+        <div class="sim-title">Calcula tu escenario</div>
+        <div class="sim-sub">Ajusta los par&aacute;metros y ve el resultado en tiempo real</div>
+
+        <div class="sim-field">
+          <label class="sim-label">Capital inicial (&euro;)</label>
+          <input class="sim-input" id="sim-cap" type="number" value="50000" min="1000" step="1000" oninput="runSim()">
+        </div>
+
+        <div class="sim-field">
+          <label class="sim-label">Tipo de inter&eacute;s anual (%)</label>
+          <input class="sim-input" id="sim-rate" type="number" value="12" min="1" max="12" step="0.5" oninput="runSim()" placeholder="1-12">
+        </div>
+
+        <div class="sim-field">
+          <label class="sim-label">Plazo</label>
+          <select class="sim-select" id="sim-period" onchange="runSim()">
+            <option value="0.5">6 meses</option>
+            <option value="1">12 meses</option>
+            <option value="2" selected>24 meses</option>
+            <option value="3">36 meses</option>
+          </select>
+        </div>
+
+        <div class="sim-field">
+          <label class="sim-label">Modalidad</label>
+          <select class="sim-select" id="sim-mode" onchange="runSim()">
+            <option value="compound">Inter&eacute;s compuesto anual</option>
+            <option value="simple">Inter&eacute;s simple</option>
+            <option value="monthly">Renta mensual</option>
+          </select>
+        </div>
+
+        <div class="sim-result">
+          <div class="sim-result-label">Ganancia neta estimada</div>
+          <div class="sim-result-val" id="sim-gain">&#8212;</div>
+          <div class="sim-result-cap" id="sim-cap-final">&#8212;</div>
+          <div class="sim-result-rows" id="sim-rows"></div>
+        </div>
+      </div>
+
+      <div class="note">Los c&aacute;lculos son orientativos. Los rendimientos exactos quedan fijados en el contrato firmado entre las partes.</div>
+    </div>
+  </div>
+
+  <!-- ═══ DETALLE ═══ -->
+  <div class="page" id="pg-detalle">
+    <div class="section">
+      <div class="section-label" style="margin-top:4px">Ver detalle de un escenario</div>
+      <div class="sc-selector" id="sc-selector"></div>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <div class="footer-top">
+    <div class="footer-brand">MMI Investments &middot; Barcelona</div>
+    <div class="footer-web">mminvestments.es</div>
+  </div>
+  <div class="footer-disc">Propuesta de car&aacute;cter privado y confidencial. Los rendimientos presentados son orientativos y est&aacute;n sujetos a contrato formalizado entre las partes. Elaborado el <span id="fdate"></span>.</div>
+</div>
+
+<script>
+var CAP = 50000;
+
+var SCENARIOS = [
+  {
+    id:'A', name:'Liquidez Total', feat:false,
+    plazo:'6 meses', tipo:'4% total', mode:'simple',
+    rate:0.04, years:0.5,
+    gain: CAP*0.04,
+    capFinal: CAP + CAP*0.04,
+    desc:'M\u00E1xima flexibilidad. Capital \u00EDntegro disponible al vencimiento. Ideal si la oportunidad aparece antes de 6 meses.',
+    timeline:[
+      {period:'Hoy',text:'Firmas el contrato y transfieres los 50.000 \u20AC.',amount:null,color:'blue'},
+      {period:'6 meses',text:'Recibes tu capital m\u00E1s los intereses.',amount:'+ 2.000 \u20AC',color:'green'},
+      {period:'Total recibido',text:'Capital final al vencimiento.',amount:'52.000 \u20AC',color:'blue'},
+    ]
+  },
+  {
+    id:'B', name:'Ventana Corta', feat:false,
+    plazo:'6m + 6m', tipo:'8%→ 6m + 10%→ 6m', mode:'windowB',
+    rate1:0.08, rate2:0.06,
+    desc:'Primeros 6 meses: todo el capital al 8% anual. Ventana para retirar hasta X\u20AC. Lo que queda, bloqueado 6 meses m\u00E1s al 6% anual.',
+  },
+  {
+    id:'C', name:'Ventana Amplia', feat:false,
+    plazo:'6m + 12m', tipo:'8%→ 6m + 12%→ 12m', mode:'windowC',
+    rate1:0.08, rate2:0.12,
+    desc:'Primeros 6 meses: todo el capital al 8% anual. Ventana para retirar hasta X\u20AC. Lo que queda, bloqueado 12 meses m\u00E1s al 12% anual.',
+  },
+  {
+    id:'D', name:'Renta Mensual', feat:false,
+    plazo:'12 meses', tipo:'10% anual', mode:'monthly',
+    rate:0.10, years:1,
+    gain: CAP*0.10,
+    capFinal: CAP + CAP*0.10,
+    monthly: CAP*0.10/12,
+    desc:'Cobro mensual de 417 \u20AC durante 12 meses. Flujo de caja constante mientras buscas el inmueble.',
+    timeline:[
+      {period:'Hoy',text:'Firmas y transfieres los 50.000 \u20AC.',amount:null,color:'blue'},
+      {period:'Cada mes',text:'Recibes 417 \u20AC en tu cuenta durante 12 meses consecutivos. En total 5.000 \u20AC de intereses.',amount:'417 \u20AC/mes',color:'green'},
+      {period:'12 meses \u2014 Vencimiento',text:'Recibes la devoluci\u00F3n del capital inicial.',amount:'50.000 \u20AC',color:'blue'},
+      {period:'Total recibido',text:'Capital m\u00E1s todos los intereses mensuales.',amount:'55.000 \u20AC',color:'blue'},
+    ]
+  },
+  {
+    id:'E', name:'M\u00E1ximo Anual', feat:false,
+    plazo:'12 meses', tipo:'12% anual', mode:'simple',
+    rate:0.12, years:1,
+    gain: CAP*0.12,
+    capFinal: CAP + CAP*0.12,
+    desc:'Capital bloqueado 12 meses al tipo m\u00E1ximo. Pago \u00FAnico al vencimiento. La mejor opci\u00F3n a corto plazo.',
+    timeline:[
+      {period:'Hoy',text:'Firmas y transfieres los 50.000 \u20AC.',amount:null,color:'blue'},
+      {period:'12 meses \u2014 Vencimiento',text:'Recibes en un solo pago tu capital m\u00E1s los intereses.',amount:'+ 6.000 \u20AC',color:'green'},
+      {period:'Total recibido',text:'Capital final al vencimiento.',amount:'56.000 \u20AC',color:'blue'},
+    ]
+  },
+  {
+    id:'F', name:'Compuesto Bianual', feat:true, badge:'Recomendado',
+    plazo:'24 meses', tipo:'12% comp.', mode:'compound',
+    rate:0.12, years:2,
+    gain: CAP*Math.pow(1.12,2)-CAP,
+    capFinal: CAP*Math.pow(1.12,2),
+    desc:'Inter\u00E9s compuesto anual. Los 6.000 \u20AC del primer a\u00F1o se suman al capital y generan intereses en el segundo. Mientras buscas la casa, el dinero trabaja al m\u00E1ximo.',
+    timeline:[
+      {period:'Hoy',text:'Firmas y transfieres los 50.000 \u20AC.',amount:null,color:'blue'},
+      {period:'A\u00F1o 1',text:'Se generan 6.000 \u20AC de inter\u00E9s sobre 50.000 \u20AC.',amount:'+ 6.000 \u20AC',color:'green'},
+      {period:'Base a\u00F1o 2',text:'El capital base sube a 56.000 \u20AC. El inter\u00E9s ahora se calcula sobre esta cifra.',amount:'56.000 \u20AC',color:'blue'},
+      {period:'A\u00F1o 2',text:'Se generan 6.720 \u20AC de inter\u00E9s sobre 56.000 \u20AC.',amount:'+ 6.720 \u20AC',color:'green'},
+      {period:'24 meses \u2014 Vencimiento',text:'Cobras el capital total con intereses compuestos.',amount:'62.720 \u20AC',color:'gold'},
+    ]
+  },
+  {
+    id:'G', name:'Compuesto Trianual', feat:true, badge:'M\u00E1ximo potencial',
+    plazo:'36 meses', tipo:'12% comp.', mode:'compound',
+    rate:0.12, years:3,
+    gain: CAP*Math.pow(1.12,3)-CAP,
+    capFinal: CAP*Math.pow(1.12,3),
+    desc:'Tres ejercicios de inter\u00E9s compuesto. Los 50.000 \u20AC iniciales se convierten en 70.246 \u20AC. Si el chollo no aparece pronto, esta es la opci\u00F3n \u00F3ptima.',
+    timeline:[
+      {period:'Hoy',text:'Firmas y transfieres los 50.000 \u20AC.',amount:null,color:'blue'},
+      {period:'A\u00F1o 1',text:'Inter\u00E9s del 12% sobre 50.000 \u20AC.',amount:'+ 6.000 \u20AC',color:'green'},
+      {period:'A\u00F1o 2',text:'Inter\u00E9s del 12% sobre 56.000 \u20AC.',amount:'+ 6.720 \u20AC',color:'green'},
+      {period:'A\u00F1o 3',text:'Inter\u00E9s del 12% sobre 62.720 \u20AC.',amount:'+ 7.526 \u20AC',color:'green'},
+      {period:'36 meses \u2014 Vencimiento',text:'Cobras tu capital m\u00E1s todos los intereses. Los 50.000 \u20AC iniciales se han convertido en 70.246 \u20AC.',amount:'70.246 \u20AC',color:'gold'},
+    ]
+  }
+];
+
+// ── UTILS ──
+function fmtE(n){ return new Intl.NumberFormat('es-ES',{minimumFractionDigits:0,maximumFractionDigits:0}).format(Math.round(n))+' €'; }
+function fmtE2(n){ return new Intl.NumberFormat('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' €'; }
+
+function getVentana(){ return Math.min(parseFloat(document.getElementById('ventana-input').value)||40000, CAP); }
+
+function calcVentana(){
+  var V = getVentana();
+  var resto = CAP - V;
+  // Tramo 1 (6m al 8% anual = 4% total) sobre todo el capital
+  var int1 = CAP * 0.08 * 0.5; // 4%
+  // Escenario B: tramo 2 sobre resto al 6% anual 6 meses = 3%
+  var int2B = resto * 0.10 * 0.5;
+  var gainB_retira = int1 + int2B;
+  var gainB_nada  = CAP * 0.08 * 0.5 + CAP * 0.10 * 0.5; // si no retira nada
+  // Escenario C: tramo 2 sobre resto al 12% anual 12 meses
+  var int2C = resto * 0.12;
+  var gainC_retira = int1 + int2C;
+  var gainC_nada  = CAP * 0.08 * 0.5 + CAP * 0.12; // si no retira nada
+  return { V:V, resto:resto, int1:int1,
+    gainB_retira:gainB_retira, gainB_nada:gainB_nada,
+    capB_retira:CAP+gainB_retira, capB_nada:CAP+gainB_nada,
+    gainC_retira:gainC_retira, gainC_nada:gainC_nada,
+    capC_retira:CAP+gainC_retira, capC_nada:CAP+gainC_nada,
+    int2B:int2B, int2C:int2C };
+}
+
+function updateVentana(){
+  var r = calcVentana();
+  document.getElementById('ventana-results').innerHTML =
+    '<div class="vwr"><div class="vwr-label">Escenario B — Si retiras '+fmtE(r.V)+'</div><div class="vwr-val green">'+fmtE(r.gainB_retira)+'</div><div class="vwr-sub">Capital final: '+fmtE(r.capB_retira)+'</div></div>'+
+    '<div class="vwr"><div class="vwr-label">Escenario B — Si no retiras nada</div><div class="vwr-val blue">'+fmtE(r.gainB_nada)+'</div><div class="vwr-sub">Capital final: '+fmtE(r.capB_nada)+'</div></div>'+
+    '<div class="vwr"><div class="vwr-label">Escenario C — Si retiras '+fmtE(r.V)+'</div><div class="vwr-val green">'+fmtE(r.gainC_retira)+'</div><div class="vwr-sub">Capital final: '+fmtE(r.capC_retira)+'</div></div>'+
+    '<div class="vwr"><div class="vwr-label">Escenario C — Si no retiras nada</div><div class="vwr-val gold">'+fmtE(r.gainC_nada)+'</div><div class="vwr-sub">Capital final: '+fmtE(r.capC_nada)+'</div></div>';
+  // Update overview gains for B and C
+  renderOverview();
+}
+
+function renderWindowDetail(s){
+  var r = calcVentana();
+  var V = r.V;
+  var resto = r.resto;
+  var isB = s.id==='B';
+  var rate2 = isB ? 0.10 : 0.12;
+  var rate2Label = isB ? '10% anual (5% en 6m)' : '12% anual';
+  var tramo2Period = isB ? '6 meses' : '12 meses';
+  var gainRetira = isB ? r.gainB_retira : r.gainC_retira;
+  var gainNada   = isB ? r.gainB_nada   : r.gainC_nada;
+  var capRetira  = isB ? r.capB_retira  : r.capC_retira;
+  var capNada    = isB ? r.capB_nada    : r.capC_nada;
+
+  return '<div class="scenario-explainer">'+
+    '<div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:14px">Cómo funciona paso a paso</div>'+
+
+    '<div class="se-step">'+
+      '<div class="se-num">1</div>'+
+      '<div class="se-body">'+
+        '<div class="se-title">Tramo 1 — Primeros 6 meses</div>'+
+        '<div class="se-text">Los <strong>50.000 € completos</strong> generan interés al <span class="se-highlight">8% anual = 4% en 6 meses</span></div>'+
+        '<div class="se-amount green">+ '+fmtE(r.int1)+' de interés</div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="se-step">'+
+      '<div class="se-num">2</div>'+
+      '<div class="se-body">'+
+        '<div class="se-title">Ventana de liquidez — Mes 6</div>'+
+        '<div class="se-text">Puedes retirar hasta <strong>'+fmtE(V)+'</strong>. Lo que no retiras (<strong>'+fmtE(resto)+'</strong>) se bloquea '+tramo2Period+' más al <span class="se-highlight">'+rate2Label+'</span></div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div style="background:var(--sky);border-radius:8px;padding:14px;margin:4px 0 4px;">'+
+      '<div style="font-size:11px;font-weight:600;color:var(--ink3);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Tus dos opciones</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'+
+        '<div style="background:var(--green-soft);border-radius:8px;padding:12px;">'+
+          '<div style="font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Si retiras '+fmtE(V)+'</div>'+
+          '<div style="font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:6px">Cobras '+fmtE(V)+' + '+fmtE(r.int1)+' intereses. Los '+fmtE(resto)+' restantes generan '+fmtE(isB?r.int2B:r.int2C)+' más.</div>'+
+          '<div style="font-family:DM Serif Display,serif;font-size:16px;color:var(--green)">Ganancia: '+fmtE(gainRetira)+'</div>'+
+          '<div style="font-size:10px;color:var(--ink3)">Capital final: '+fmtE(capRetira)+'</div>'+
+        '</div>'+
+        '<div style="background:var(--gold-soft);border-radius:8px;padding:12px;border:1px solid var(--gold-line);">'+
+          '<div style="font-size:10px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Si no retiras nada</div>'+
+          '<div style="font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:6px">Los 50.000 € completos se bloquean '+tramo2Period+' más al '+(rate2*100).toFixed(0)+'%. Máxima rentabilidad.</div>'+
+          '<div style="font-family:DM Serif Display,serif;font-size:16px;color:var(--gold)">Ganancia: '+fmtE(gainNada)+'</div>'+
+          '<div style="font-size:10px;color:var(--ink3)">Capital final: '+fmtE(capNada)+'</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="se-step" style="padding-top:10px">'+
+      '<div class="se-num gold">3</div>'+
+      '<div class="se-body">'+
+        '<div class="se-title">Vencimiento final</div>'+
+        '<div class="se-text">Recibes el capital bloqueado más todos sus intereses. Entre <strong>'+fmtE(gainRetira)+'</strong> y <strong>'+fmtE(gainNada)+'</strong> de ganancia según tu decisión.</div>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+}
+
+// ── TABS ──
+function showTab(id, el){
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
+  el.classList.add('on');
+  document.getElementById('pg-'+id).classList.add('on');
+  if(id==='comparativa') renderCompare();
+  if(id==='detalle' && !document.getElementById('detail-content').innerHTML) showDetail('A');
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', function(){
+  var d = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('hdate').textContent = d;
+  document.getElementById('fdate').textContent = d;
+  updateVentana();
+  renderOverview();
+  renderSelector();
+  runSim();
+  showDetail('A');
+});
+
+// ── OVERVIEW ──
+function renderOverview(){
+  var r = calcVentana();
+  var el = document.getElementById('sc-overview');
+  el.innerHTML = SCENARIOS.map(function(s){
+    var gainStr;
+    if(s.mode==='windowB') gainStr = fmtE(r.gainB_retira)+' \u2013 '+fmtE(r.gainB_nada);
+    else if(s.mode==='windowC') gainStr = fmtE(r.gainC_retira)+' \u2013 '+fmtE(r.gainC_nada);
+    else gainStr = s.gain!==null ? fmtE(s.gain) : fmtE(s.gainMin)+' \u2013 '+fmtE(s.gainMax);
+    return '<div class="sc-ov '+(s.feat?'gold-ov':'')+'" onclick="goDetail(\''+s.id+'\')">'+
+      '<div class="sc-letter '+(s.feat?'gold':'')+'">'+s.id+'</div>'+
+      '<div class="sco-body">'+
+        '<div class="sco-name">'+s.name+
+          (s.badge?'<br><span class="badge-sm '+(s.feat?'gold':'')+'">'+s.badge+'</span>':'')+'</div>'+
+        '<div class="sco-desc">'+s.plazo+' &middot; '+s.tipo+'</div>'+
+      '</div>'+
+      '<div class="sco-right">'+
+        '<div class="sco-gain '+(s.feat?'gold':'')+'">'+gainStr+'</div>'+
+        '<div class="sco-tag">ganancia neta</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function goDetail(id){
+  document.querySelectorAll('.tab').forEach(function(t,i){ if(i===3) t.classList.add('on'); else t.classList.remove('on'); });
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
+  document.getElementById('pg-detalle').classList.add('on');
+  showDetail(id);
+  // Update selector
+  document.querySelectorAll('.sc-btn').forEach(function(b){ b.classList.toggle('on', b.dataset.id===id); });
+  window.scrollTo(0,0);
+}
+
+// ── COMPARE ──
+function renderCompare(){
+  var r = calcVentana();
+  function getGain(s){ if(s.mode==='windowB') return r.gainB_nada; if(s.mode==='windowC') return r.gainC_nada; return s.gain!==null?s.gain:s.gainMax; }
+  function getCap(s){  if(s.mode==='windowB') return r.capB_nada;  if(s.mode==='windowC') return r.capC_nada;  return s.capFinal!==null?s.capFinal:s.capMax; }
+  var maxGain = Math.max.apply(null, SCENARIOS.map(getGain));
+  var maxCap  = Math.max.apply(null, SCENARIOS.map(getCap));
+
+  document.getElementById('compare-grid').innerHTML = SCENARIOS.map(function(s){
+    var g = getGain(s);
+    var w = Math.round((g/maxGain)*100);
+    var isBest = g === maxGain;
+    return '<div class="cmp-row '+(isBest?'best':'')+'">'+
+      '<div class="cmp-letter '+(s.feat?'gold':'')+'">'+s.id+'</div>'+
+      '<div>'+
+        '<div style="font-size:11px;font-weight:500;color:var(--ink);margin-bottom:4px">'+s.name+'</div>'+
+        '<div class="cmp-bar-wrap"><div class="cmp-bar '+(s.feat?'gold':'')+'" style="width:'+w+'%"></div></div>'+
+        '<div class="cmp-name">'+s.plazo+' &middot; '+s.tipo+'</div>'+
+      '</div>'+
+      '<div class="cmp-val '+(s.feat?'gold':'')+'">'+
+        (s.mode==='windowB'||s.mode==='windowC' ? fmtE(getGain(s)) : s.gain!==null ? fmtE(s.gain) : 'hasta '+fmtE(s.gainMax))+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  document.getElementById('compare-cap-grid').innerHTML = SCENARIOS.map(function(s){
+    var c = getCap(s);
+    var w = Math.round((c/maxCap)*100);
+    return '<div class="cmp-row '+(c===maxCap?'best':'')+'">'+
+      '<div class="cmp-letter '+(s.feat?'gold':'')+'">'+s.id+'</div>'+
+      '<div>'+
+        '<div style="font-size:11px;font-weight:500;color:var(--ink);margin-bottom:4px">'+s.name+'</div>'+
+        '<div class="cmp-bar-wrap"><div class="cmp-bar '+(s.feat?'gold':'')+'" style="width:'+w+'%"></div></div>'+
+        '<div class="cmp-name">'+s.plazo+'</div>'+
+      '</div>'+
+      '<div class="cmp-val '+(s.feat?'gold':'')+'">'+
+        fmtE(getCap(s))+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+// ── SIMULATOR ──
+function runSim(){
+  var cap  = parseFloat(document.getElementById('sim-cap').value)||0;
+  var rate = parseFloat(document.getElementById('sim-rate').value)/100||0;
+  var yr   = parseFloat(document.getElementById('sim-period').value)||1;
+  var mode = document.getElementById('sim-mode').value;
+  if(!cap||!rate) return;
+  var gain=0, capF=0, monthly=0;
+  if(mode==='compound'){
+    capF = cap * Math.pow(1+rate, yr);
+    gain = capF - cap;
+  } else if(mode==='simple'){
+    gain = cap * rate * yr;
+    capF = cap + gain;
+  } else {
+    gain = cap * rate * yr;
+    capF = cap + gain;
+    monthly = (cap * rate) / 12;
+  }
+  document.getElementById('sim-gain').textContent = fmtE(gain);
+  document.getElementById('sim-cap-final').textContent = 'Capital final: '+fmtE(capF);
+  var rows = '<div class="srr"><span class="srr-lbl">Capital inicial</span><span class="srr-val">'+fmtE(cap)+'</span></div>'+
+    '<div class="srr"><span class="srr-lbl">Tipo aplicado</span><span class="srr-val">'+(rate*100).toFixed(1)+'% &middot; '+yr+' a\u00F1o'+(yr!==1?'s':'')+'</span></div>'+
+    '<div class="srr"><span class="srr-lbl">Modalidad</span><span class="srr-val">'+(mode==='compound'?'Compuesto anual':mode==='simple'?'Simple':'Renta mensual')+'</span></div>';
+  if(mode==='monthly') rows += '<div class="srr"><span class="srr-lbl">Cobro mensual</span><span class="srr-val green">'+fmtE(monthly)+'/mes</span></div>';
+  rows += '<div class="srr"><span class="srr-lbl">Ganancia neta</span><span class="srr-val green">'+fmtE(gain)+'</span></div>';
+  document.getElementById('sim-rows').innerHTML = rows;
+}
+
+// ── DETAIL ──
+function renderSelector(){
+  document.getElementById('sc-selector').innerHTML = SCENARIOS.map(function(s){
+    return '<button class="sc-btn '+(s.feat?'gold-btn':'')+' '+(s.id==='A'?'on':'')+'" data-id="'+s.id+'" onclick="showDetail(\''+s.id+'\');this.parentNode.querySelectorAll(\'.sc-btn\').forEach(function(b){b.classList.remove(\'on\')});this.classList.add(\'on\');">'+s.id+'</button>';
+  }).join('');
+}
+
+function showDetail(id){
+  var s = SCENARIOS.find(function(x){ return x.id===id; });
+  if(!s) return;
+
+  // Window scenarios — dynamic
+  if(s.mode==='windowB'||s.mode==='windowC'){
+    var r = calcVentana();
+    var isB = s.mode==='windowB';
+    var gainMin = isB ? r.gainB_retira : r.gainC_retira;
+    var gainMax = isB ? r.gainB_nada   : r.gainC_nada;
+    var capMin  = isB ? r.capB_retira  : r.capC_retira;
+    var capMax  = isB ? r.capB_nada    : r.capC_nada;
+    var gainStr = fmtE(gainMin)+' \u2013 '+fmtE(gainMax);
+    var capStr  = fmtE(capMin)+' \u2013 '+fmtE(capMax);
+    document.getElementById('detail-content').innerHTML =
+      '<div class="detail-panel">'+
+        '<div class="dp-header">'+
+          '<div>'+
+            '<div class="dp-letter">'+s.id+'</div>'+
+            '<div class="dp-title">'+s.name+'</div>'+
+          '</div>'+
+          '<div style="text-align:right">'+
+            '<div class="dp-gain-lbl">Ganancia neta</div>'+
+            '<div class="dp-gain" style="font-size:22px">'+gainStr+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px">'+s.desc+'</div>'+
+        '<div class="dp-rows">'+
+          '<div class="dp-row"><span class="dp-row-lbl">Capital inicial</span><span class="dp-row-val">'+fmtE(CAP)+'</span></div>'+
+          '<div class="dp-row"><span class="dp-row-lbl">Plazo total</span><span class="dp-row-val">'+s.plazo+'</span></div>'+
+          '<div class="dp-row"><span class="dp-row-lbl">Tipo aplicado</span><span class="dp-row-val">'+s.tipo+'</span></div>'+
+          '<div class="dp-row"><span class="dp-row-lbl">Ventana de retirada</span><span class="dp-row-val blue">hasta '+fmtE(r.V)+'</span></div>'+
+          '<div class="dp-row"><span class="dp-row-lbl">Capital que queda bloqueado</span><span class="dp-row-val">'+fmtE(r.resto)+'</span></div>'+
+          '<div class="dp-row"><span class="dp-row-lbl">Ganancia si retiras</span><span class="dp-row-val green">'+fmtE(gainMin)+'</span></div>'+
+          '<div class="dp-row total-row"><span class="dp-row-lbl">Ganancia si no retiras nada</span><span class="dp-row-val gold">'+fmtE(gainMax)+'</span></div>'+
+        '</div>'+
+      '</div>'+
+      renderWindowDetail(s);
+    return;
+  }
+
+  var gainStr = s.gain!==null ? fmtE(s.gain) : fmtE(s.gainMin)+' \u2013 '+fmtE(s.gainMax);
+  var capStr  = s.capFinal!==null ? fmtE(s.capFinal) : fmtE(s.capMin)+' \u2013 '+fmtE(s.capMax);
+
+  var tl = s.timeline.map(function(t, i){
+    var isLast = i === s.timeline.length-1;
+    return '<div class="tl-item">'+
+      '<div class="tl-left">'+
+        '<div class="tl-dot '+(t.color==='gold'?'gold':'')+'"></div>'+
+        (!isLast?'<div class="tl-line"></div>':'')+
+      '</div>'+
+      '<div class="tl-body">'+
+        '<div class="tl-period '+(t.color==='gold'?'gold':'')+'">'+t.period+'</div>'+
+        '<div class="tl-text">'+t.text+'</div>'+
+        (t.amount?'<div class="tl-amount '+(t.color==='gold'?'gold':t.color==='green'?'green':'')+'">'+t.amount+'</div>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  document.getElementById('detail-content').innerHTML =
+    '<div class="detail-panel">'+
+      '<div class="dp-header">'+
+        '<div>'+
+          '<div class="dp-letter '+(s.feat?'gold':'')+'">'+s.id+'</div>'+
+          '<div class="dp-title">'+s.name+'</div>'+
+          (s.badge?'<div class="badge-sm '+(s.feat?'gold':'')+'" style="margin-top:6px">'+s.badge+'</div>':'')+
+        '</div>'+
+        '<div style="text-align:right">'+
+          '<div class="dp-gain-lbl">Ganancia neta</div>'+
+          '<div class="dp-gain '+(s.feat?'gold':'')+'">'+gainStr+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px">'+s.desc+'</div>'+
+      '<div class="dp-rows">'+
+        '<div class="dp-row"><span class="dp-row-lbl">Capital inicial</span><span class="dp-row-val">'+fmtE(CAP)+'</span></div>'+
+        '<div class="dp-row"><span class="dp-row-lbl">Plazo</span><span class="dp-row-val">'+s.plazo+'</span></div>'+
+        '<div class="dp-row"><span class="dp-row-lbl">Tipo de inter\u00E9s</span><span class="dp-row-val">'+s.tipo+'</span></div>'+
+        '<div class="dp-row"><span class="dp-row-lbl">Ganancia neta</span><span class="dp-row-val '+(s.feat?'gold':'blue')+'">'+gainStr+'</span></div>'+
+        '<div class="dp-row total-row"><span class="dp-row-lbl">Capital final</span><span class="dp-row-val '+(s.feat?'gold':'blue')+'">'+capStr+'</span></div>'+
+        (s.monthly?'<div class="dp-row"><span class="dp-row-lbl">Cobro mensual</span><span class="dp-row-val green">'+fmtE(s.monthly)+'/mes</span></div>':'')+
+      '</div>'+
+    '</div>'+
+    '<div class="card" style="margin-bottom:10px">'+
+      '<div style="font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-bottom:14px">C\u00F3mo funciona</div>'+
+      '<div class="timeline">'+tl+'</div>'+
+    '</div>';
+}
+</script>
+</body>
+</html>
